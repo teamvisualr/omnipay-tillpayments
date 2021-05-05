@@ -7,10 +7,13 @@ namespace Omnipay\Till\Message;
 
 use Guzzle\Http\ClientInterface;
 use Omnipay\Common\CreditCard;
+use Omnipay\Common\Exception\RuntimeException;
+use Omnipay\Common\Helper;
 use Omnipay\Till\Customer;
 use Omnipay\Till\InvalidParameterException;
 use Omnipay\Till\Schedule;
 use Omnipay\Till\ThreeDSecureData;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
@@ -49,8 +52,39 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         parent::__construct($httpClient, $httpRequest);
 
-        // Set default
-        $this->setCustomer(new Customer());
+    }
+
+    /**
+     * Initialize the object with parameters.
+     *
+     * If any unknown parameters passed, they will be ignored.
+     *
+     * @param array $parameters An associative array of parameters
+     *
+     * @return \Omnipay\Common\Message\AbstractRequest
+     * @throws RuntimeException
+     */
+    public function initialize(array $parameters = array())
+    {
+        parent::initialize($parameters);
+
+        $this->setDefaultParameters();
+
+        return $this;
+    }
+
+    /**
+     * Set default parameters after initializing
+     */
+    public function setDefaultParameters()
+    {
+        if(!$this->getCustomer()) {
+            $this->setCustomer(new Customer());
+        }
+
+        if(!$this->getMerchantTransactionId()) {
+            $this->setMerchantTransactionId($this->getDefaultMerchantTransactionId());
+        }
     }
 
     /**
@@ -119,6 +153,35 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setPassword($value)
     {
         return $this->setParameter('password', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultMerchantTransactionIdPrefix()
+    {
+        return $this->getParameter('defaultMerchantTransactionIdPrefix');
+    }
+
+    /**
+     * @param $value
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setDefaultMerchantTransactionIdPrefix($value)
+    {
+        return $this->setParameter('defaultMerchantTransactionIdPrefix', $value);
+    }
+
+    /**
+     * Get default merchantTransactionId
+     * 
+     * @return string
+     */
+    public function getDefaultMerchantTransactionId()
+    {
+        $prefix = $this->getDefaultMerchantTransactionIdPrefix();
+
+        return uniqid($prefix);
     }
 
     /**

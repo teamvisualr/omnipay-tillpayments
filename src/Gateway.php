@@ -115,6 +115,7 @@ class Gateway extends AbstractGateway
             'username' => '',
             'password' => '',
             'testMode' => false,
+            'defaultMerchantTransactionIdPrefix' => 'omnipay-',
         );
     }
 
@@ -201,7 +202,23 @@ class Gateway extends AbstractGateway
     public function setPassword($value)
     {
         return $this->setParameter('password', $value);
-//        return $this->setParameter('password', $this->hashPassword($value));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultMerchantTransactionIdPrefix()
+    {
+        return $this->getParameter('defaultMerchantTransactionIdPrefix');
+    }
+
+    /**
+     * @param $value
+     * @return Gateway
+     */
+    public function setDefaultMerchantTransactionIdPrefix($value)
+    {
+        return $this->setParameter('defaultMerchantTransactionIdPrefix', $value);
     }
 
     /**

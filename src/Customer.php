@@ -33,6 +33,7 @@ class Customer implements CustomerInterface
      * Initialize the parameters from CreditCard object
      *
      * @param CreditCard $card
+     * @return Customer $this
      */
     public function initializeFromCreditCard(CreditCard $card)
     {
@@ -80,6 +81,8 @@ class Customer implements CustomerInterface
                 }
             }
         }
+
+        return $this;
     }
 
 
