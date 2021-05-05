@@ -78,7 +78,10 @@ class PurchaseRequest extends AbstractTransactionRequest
         }
 
 //        $data['customerProfileData'] = null; // TODO
-//        $data['threeDSecureData'] = null; // TODO
+
+        if($threeDSecureData = $this->getThreeDSecureDataData()) {
+            $data['threeDSecureData'] = $threeDSecureData;
+        }
 
         if($language = $this->getLanguage()) {
             $data['language'] = $language;

@@ -42,4 +42,11 @@ interface ScheduleInterface
      */
     public function getStartDateTime();
 
+
+    /**
+     * Get data in payload format
+     *
+     * @return array
+     */
+    public function getData();
 }

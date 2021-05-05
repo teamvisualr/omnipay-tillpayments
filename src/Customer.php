@@ -2,6 +2,7 @@
 
 namespace Omnipay\Till;
 
+use Omnipay\Common\CreditCard;
 use Omnipay\Common\Helper;
 use Omnipay\Till\Traits\ParameterBagTrait;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -27,6 +28,60 @@ class Customer implements CustomerInterface
     {
         $this->initialize($parameters);
     }
+
+    /**
+     * Initialize the parameters from CreditCard object
+     *
+     * @param CreditCard $card
+     */
+    public function initializeFromCreditCard(CreditCard $card)
+    {
+        // Get from the following available getters
+        // Customer attribute getter X CreditCard attribute getter
+        $attributeMapping = [
+            'firstName' => 'billingFirstName',
+            'lastName' => 'billingLastName',
+            'birthDate' => 'birthday',
+            'gender' => 'gender',
+
+            'billingAddress1' => 'billingAddress1',
+            'billingAddress2' => 'billingAddress2',
+            'billingCity' => 'billingCity',
+            'billingPostcode' => 'billingPostcode',
+            'billingState' => 'billingState',
+            'billingCountry' => 'billingCountry',
+            'billingPhone' => 'billingPhone',
+
+            'shippingFirstName' => 'shippingFirstName',
+            'shippingLastName' => 'shippingLastName',
+            'shippingCompany' => 'shippingCompany',
+            'shippingAddress1' => 'shippingAddress1',
+            'shippingAddress2' => 'shippingAddress2',
+            'shippingPostcode' => 'shippingPostcode',
+            'shippingState' => 'shippingState',
+            'shippingCountry' => 'shippingCountry',
+            'shippingPhone' => 'shippingPhone',
+
+            'company' => 'company',
+            'email' => 'email',
+        ];
+
+        foreach($attributeMapping as $customerAttribute => $cardAttribute) {
+            $customerMethod = 'set' . ucfirst($customerAttribute);
+            $cardMethod = 'get' . ucfirst($cardAttribute);
+
+            if ($customerMethod && $cardAttribute && method_exists($this, $customerMethod) && method_exists($card, $cardMethod)) {
+                // Get value
+                $value = $card->{$cardMethod}();
+
+                // Set it to customer
+                if($value) {
+                    $this->{$customerMethod}($value);
+                }
+            }
+        }
+    }
+
 
     /**
      * {@inheritDoc}
@@ -525,6 +580,10 @@ class Customer implements CustomerInterface
      */
     public function setPaymentData($value)
     {
+        if ($value && !$value instanceof PaymentData) {
+            $value = new PaymentData($value);
+        }
+
         return $this->setParameter('paymentData', $value);
     }
 
@@ -573,10 +632,16 @@ class Customer implements CustomerInterface
         ];
 
         foreach($optionalAttributes as $attribute) {
-            $value = $this->parameters->get($attribute);
-            if (!isset($value)) {
+            $method = 'get' . ucfirst($attribute);
+            $value = $this->{$method}();
+            if (isset($value) && $value) {
                 $data[$attribute] = $value;
             }
+        }
+
+        // Payment
+        if($paymentData = $this->getPaymentData()) {
+            $data['paymentData'] = $paymentData->getData();
         }
 
         return $data;

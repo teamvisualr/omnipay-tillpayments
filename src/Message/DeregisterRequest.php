@@ -22,7 +22,7 @@ class DeregisterRequest extends AbstractTransactionRequest
 
         $data = $this->getBaseData();
 
-        $data['referenceUuid'] = $referenceUuid;
+        $data['referenceUuid'] = $this->getReferenceUuid();
 
         return $data;
     }
@@ -34,7 +34,7 @@ class DeregisterRequest extends AbstractTransactionRequest
      */
     public function getEndpoint()
     {
-        return parent::getEndpoint().'/register';
+        return parent::getEndpoint().'/deregister';
     }
 
 }

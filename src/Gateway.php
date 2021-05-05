@@ -1,6 +1,6 @@
 <?php
 /**
- * Pin Gateway
+ * Till Gateway
  */
 
 namespace Omnipay\Till;
@@ -15,9 +15,9 @@ use Omnipay\Common\AbstractGateway;
  * ### Example
  *
  * <code>
- * // Create a gateway for the Pin REST Gateway
+ * // Create a gateway for the Till REST Gateway
  * // (routes to GatewayFactory::create)
- * $gateway = Omnipay::create('PinGateway');
+ * $gateway = Omnipay::create('TillGateway');
  *
  * // Initialise the gateway
  * $gateway->initialize(array(
@@ -75,7 +75,7 @@ use Omnipay\Common\AbstractGateway;
  *
  * ### Authentication
  *
- * Calls to the Pin Payments API must be authenticated using HTTP
+ * Calls to the Till Payments API must be authenticated using HTTP
  * basic authentication, with your API key as the username, and
  * a blank string as the password.
  *
@@ -95,7 +95,7 @@ use Omnipay\Common\AbstractGateway;
  *
  * Your publishable key can be used from insecure locations (such as
  * browsers or mobile apps) to create cards with the cards API. This
- * is the key you use with Pin.js to create secure payment forms in
+ * is the key you use with Till.js to create secure payment forms in
  * the browser.
  *
  * @see \Omnipay\Common\AbstractGateway
@@ -221,7 +221,7 @@ class Gateway extends AbstractGateway
      * (which is called debit in their API)
      *
      * @param array $parameters
-     * @return \Omnipay\Pin\Message\PurchaseRequest
+     * @return \Omnipay\Till\Message\PurchaseRequest
      */
     public function purchase(array $parameters = array())
     {
@@ -233,7 +233,7 @@ class Gateway extends AbstractGateway
      * (which is called preauthorize in their API)
      *
      * @param array $parameters
-     * @return \Omnipay\Pin\Message\AuthorizeRequest
+     * @return \Omnipay\Till\Message\AuthorizeRequest
      */
     public function authorize(array $parameters = array())
     {
@@ -244,7 +244,7 @@ class Gateway extends AbstractGateway
      * Create a capture request
      *
      * @param array $parameters
-     * @return \Omnipay\Pin\Message\CaptureRequest
+     * @return \Omnipay\Till\Message\CaptureRequest
      */
     public function capture(array $parameters = array())
     {
@@ -253,9 +253,10 @@ class Gateway extends AbstractGateway
 
     /**
      * Create a void request
+     * This voids the authorized payment
      *
      * @param array $parameters
-     * @return \Omnipay\Pin\Message\VoidRequest
+     * @return \Omnipay\Till\Message\VoidRequest
      */
     public function void(array $parameters = array())
     {
@@ -266,7 +267,7 @@ class Gateway extends AbstractGateway
      * Create a refund request
      *
      * @param array $parameters
-     * @return \Omnipay\Pin\Message\RefundRequest
+     * @return \Omnipay\Till\Message\RefundRequest
      */
     public function refund(array $parameters = array())
     {
@@ -274,34 +275,36 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * Create a createCustomer request
+     * Create a createCard request
      * (which is called register in their API)
+     * This registers the payment instrument token
      *
      * @param array $parameters
-     * @return \Omnipay\Pin\Message\CreateCustomerRequest
+     * @return \Omnipay\Till\Message\RegisterRequest
      */
-    public function createCustomer(array $parameters = array())
+    public function createCard(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Till\Message\CreateCustomerRequest', $parameters);
+        return $this->createRequest('\Omnipay\Till\Message\RegisterRequest', $parameters);
     }
 
     /**
-     * Create a createCustomer request
+     * Create a deleteCard request
      * (which is called deregister in their API)
+     * This removes the registered payment instrument token
      *
      * @param array $parameters
-     * @return \Omnipay\Pin\Message\DeleteCustomerRequest
+     * @return \Omnipay\Till\Message\DeregisterRequest
      */
-    public function deleteCustomer(array $parameters = array())
+    public function deleteCard(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Till\Message\DeleteCustomerRequest', $parameters);
+        return $this->createRequest('\Omnipay\Till\Message\DeregisterRequest', $parameters);
     }
 
     /**
      * Create a payout request
      *
      * @param array $parameters
-     * @return \Omnipay\Pin\Message\PayoutRequest
+     * @return \Omnipay\Till\Message\PayoutRequest
      */
     public function payout(array $parameters = array())
     {

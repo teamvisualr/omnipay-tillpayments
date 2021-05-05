@@ -16,6 +16,8 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
 {
 
     /**
+     * Check if the returned response is a successful one
+     *
      * @return bool
      */
     public function isSuccessful()
@@ -29,6 +31,17 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
     public function getTransactionReference()
     {
         return isset($this->data['uuid']) ? (string) $this->data['uuid'] : null;
+    }
+
+    /**
+     * Get a card / payment reference for createCard requests.
+     * This can be used on next payment by assigning this reference into 'referenceUuid' on the next transaction payload
+     *
+     * @return string|null
+     */
+    public function getCardReference()
+    {
+        return $this->getTransactionReference();
     }
 
     /**
@@ -79,29 +92,75 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
         return null;
     }
 
-    // TODO
+    /**
+     * Get the error message from Till Payments
+     *
+     * @return string|null
+     */
     public function getMessage()
     {
-        $messages = array();
-
         if (isset($this->data['errors'])) {
             foreach ($this->data['errors'] as $error) {
-                if(isset($error['adapterMessage'])) {
-                    $messages[] = $error['adapterMessage'];
-                } else if(isset($error['errorMessage'])) {
-                    $messages[] = $error['errorMessage'];
+                if(isset($error['errorMessage'])) {
+                    return $error['errorMessage'];
                 }
             }
         }
 
-        return implode(', ', $messages) ?: null;
+        return null;
     }
 
-    // TODO
+    /**
+     * Get the error code from Till Payments
+     *
+     * @return string|null
+     */
     public function getCode()
     {
         if (isset($this->data['errors'])) {
-            return $this->data['errors'];
+            foreach ($this->data['errors'] as $error) {
+                if(isset($error['errorCode'])) {
+                    return $error['errorCode'];
+                }
+            }
         }
+
+        return null;
+    }
+
+    /**
+     * Get the error message from the implemented adapter of Till Payments
+     *
+     * @return string|null
+     */
+    public function getAdapterMessage()
+    {
+        if (isset($this->data['errors'])) {
+            foreach ($this->data['errors'] as $error) {
+                if(isset($error['adapterMessage'])) {
+                    return $error['adapterMessage'];
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the error code from the implemented adapter of Till Payments
+     *
+     * @return string|null
+     */
+    public function getAdapterCode()
+    {
+        if (isset($this->data['errors'])) {
+            foreach ($this->data['errors'] as $error) {
+                if(isset($error['adapterCode'])) {
+                    return $error['adapterCode'];
+                }
+            }
+        }
+
+        return null;
     }
 }

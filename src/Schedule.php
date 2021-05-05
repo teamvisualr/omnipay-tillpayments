@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  *
  * This class defines a single schedule in the Till system.
  *
- * @see CustomerInterface
+ * @see ScheduleInterface
  */
 class Schedule implements ScheduleInterface
 {
@@ -24,7 +24,7 @@ class Schedule implements ScheduleInterface
     use ParameterBagTrait;
 
     /**
-     * Create a new customer with the specified parameters
+     * Create a new schedule with the specified parameters
      *
      * @param array|null $parameters An array of parameters to set on the new object
      */
@@ -41,7 +41,7 @@ class Schedule implements ScheduleInterface
     }
 
     /**
-     * Set the customer Amount
+     * Set the schedule Amount
      * @param $value
      * @return Schedule
      */
@@ -59,7 +59,7 @@ class Schedule implements ScheduleInterface
     }
 
     /**
-     * Set the customer Currency
+     * Set the schedule Currency
      * @param $value
      * @return Schedule
      */
@@ -77,7 +77,7 @@ class Schedule implements ScheduleInterface
     }
 
     /**
-     * Set the customer PeriodLength
+     * Set the schedule PeriodLength
      * @param $value
      * @return Schedule
      */
@@ -95,14 +95,19 @@ class Schedule implements ScheduleInterface
     }
 
     /**
-     * Set the customer PeriodUnit
+     * Set the schedule PeriodUnit
      * @param $value
      * @return Schedule
      */
     public function setPeriodUnit($value)
     {
         $value = strtoupper($value);
-        if(in_array($value, [self::PERIOD_UNIT_DAY, self::PERIOD_UNIT_WEEK, self::PERIOD_UNIT_MONTH, self::PERIOD_UNIT_YEAR])) {
+        if(!in_array($value, [
+            self::PERIOD_UNIT_DAY,
+            self::PERIOD_UNIT_WEEK,
+            self::PERIOD_UNIT_MONTH,
+            self::PERIOD_UNIT_YEAR
+        ])) {
             throw new InvalidParameterException('Invalid value on period unit');
         }
 
@@ -118,7 +123,7 @@ class Schedule implements ScheduleInterface
     }
 
     /**
-     * Set the customer StartDateTime
+     * Set the schedule StartDateTime
      * @param $value
      * @return Schedule
      */

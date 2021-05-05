@@ -5,10 +5,13 @@
 
 namespace Omnipay\Till\Message;
 
+use Guzzle\Http\ClientInterface;
 use Omnipay\Common\CreditCard;
 use Omnipay\Till\Customer;
 use Omnipay\Till\InvalidParameterException;
 use Omnipay\Till\Schedule;
+use Omnipay\Till\ThreeDSecureData;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
  * Till Abstract Request
@@ -35,6 +38,20 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      * @var string
      */
     protected $testEndpoint = 'https://test-gateway.tillpayments.com/api/v3/transaction/';
+
+    /**
+     * Create a new Request
+     *
+     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
+     * @param HttpRequest     $httpRequest A Symfony HTTP request object
+     */
+    public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest)
+    {
+        parent::__construct($httpClient, $httpRequest);
+
+        // Set default
+        $this->setCustomer(new Customer());
+    }
 
     /**
      * @return mixed
@@ -343,7 +360,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setTransactionIndicator($value)
     {
         $value = strtoupper($value);
-        if(in_array($value, [
+        if(!in_array($value, [
             self::TRANSACTION_INDICATOR_SINGLE,
             self::TRANSACTION_INDICATOR_INITIAL,
             self::TRANSACTION_INDICATOR_RECURRING,
@@ -419,6 +436,27 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         }
 
         return $this->setParameter('schedule', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getThreeDSecureData()
+    {
+        return $this->getParameter('threeDSecureData');
+    }
+
+    /**
+     * @param $value
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setThreeDSecureData($value)
+    {
+        if ($value && !$value instanceof ThreeDSecureData) {
+            $value = new ThreeDSecureData($value);
+        }
+
+        return $this->setParameter('threeDSecureData', $value);
     }
 
     /**
@@ -509,10 +547,78 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return null;
     }
 
-    // TODO
-    protected function getCostInteger($amount)
+    /**
+     * Get the customer data payload
+     *
+     * @return array|null
+     */
+    protected function getThreeDSecureDataData()
     {
-        return (int) round($amount * pow(10, $this->getCurrencyDecimalPlaces()));
+        $threeDSecureDate = $this->getThreeDSecureData();
+
+        if($threeDSecureDate) {
+            return $threeDSecureDate->getData();
+        }
+
+        return null;
+    }
+
+    /**
+     * Sets the card.
+     * Override this method to use Customer object instead
+     *
+     * @param CreditCard $value
+     * @return \Omnipay\Common\Message\AbstractRequest Provides a fluent interface
+     */
+    public function setCard($value)
+    {
+        if ($value) {
+            if($value instanceof CreditCard) {
+                $customer = new Customer();
+                $customer->initializeFromCreditCard($value);
+            } else {
+                $customer = new Customer($value);
+            }
+
+            $this->setParameter('customer', $customer);
+        }
+
+        return $this->setParameter('card', $value);
+    }
+
+    /**
+     * Sets the card reference (some kind of saved card mechanism)
+     *
+     * @param string $value
+     * @return \Omnipay\Common\Message\AbstractRequest Provides a fluent interface
+     */
+    public function setCardReference($value)
+    {
+        // Till Payment uses referenceUuid of the previous transaction or the stored uui that has been "register"ed
+        $this->setReferenceUuid($value);
+
+        return $this->setParameter('cardReference', $value);
+    }
+
+    /**
+     * Set the payment data of a customer
+     *
+     * @param mixed $value
+     * @return \Omnipay\Common\Message\AbstractRequest Provides a fluent interface
+     */
+    public function setPaymentData($value)
+    {
+        return $this->getCustomer()->setPaymentData($value);
+    }
+
+    /**
+     * Set the payment data of a customer
+     *
+     * @return PaymentData|null
+     */
+    public function getPaymentData()
+    {
+        return $this->getCustomer()->getPaymentData($value);
     }
 
     /**

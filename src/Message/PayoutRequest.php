@@ -80,7 +80,7 @@ class PayoutRequest extends AbstractTransactionRequest
      */
     public function getEndpoint()
     {
-        return parent::getEndpoint().'/preauthorize';
+        return parent::getEndpoint().'/payout';
     }
 
 }

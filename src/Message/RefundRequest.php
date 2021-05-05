@@ -24,7 +24,7 @@ class RefundRequest extends AbstractTransactionRequest
 
         $data['amount'] = $this->getAmount();
         $data['currency'] = $this->getCurrency();
-        $data['referenceUuid'] = $referenceUuid;
+        $data['referenceUuid'] = $this->getReferenceUuid();
 
 
         if($callbackUrl = $this->getCallbackUrl()) {
@@ -55,7 +55,7 @@ class RefundRequest extends AbstractTransactionRequest
      */
     public function getEndpoint()
     {
-        return parent::getEndpoint().'/preauthorize';
+        return parent::getEndpoint().'/refund';
     }
 
 }

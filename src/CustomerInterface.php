@@ -160,4 +160,10 @@ interface CustomerInterface
      */
     public function getPaymentData();
 
+    /**
+     * Get data in payload format
+     *
+     * @return array
+     */
+    public function getData();
 }

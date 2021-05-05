@@ -26,9 +26,6 @@ abstract class AbstractTransactionRequest extends AbstractRequest
     {
         $jsonBody = json_encode($data);
 
-        // DEBUG
-        print_r($jsonBody);
-
         // This request uses the REST endpoint and requires the JSON content type header
         $httpResponse = $this->httpClient->post($this->getEndpoint(), $this->buildHeaders($jsonBody), $jsonBody)
             ->setAuth($this->getUsername(), $this->getPassword())
