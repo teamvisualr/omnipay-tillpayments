@@ -3,7 +3,7 @@
  * Customer interface
  */
 
-namespace Omnipay\Till\Traits;
+namespace Visualr\Omnipay\TillPayments\Traits;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Helper;

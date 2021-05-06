@@ -1,5 +1,5 @@
 {
-    "name": "omnipay/till",
+    "name": "visualr/omnipay-tillpayments",
     "type": "library",
     "description": "Till Payments driver for the Omnipay payment processing library",
     "keywords": [
@@ -10,7 +10,7 @@
         "pay",
         "payment"
     ],
-    "homepage": "https://github.com/visualrteam/omnipay-tillpayments",
+    "homepage": "https://github.com/teamvisualr/omnipay-tillpayments",
     "license": "MIT",
     "authors": [
         {
@@ -23,11 +23,11 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/visualrteam/omnipay-tillpayments/contributors"
+            "homepage": "https://github.com/teamvisualr/omnipay-tillpayments/contributors"
         }
     ],
     "autoload": {
-        "psr-4": { "Omnipay\\Eway\\" : "src/" }
+        "psr-4": { "Visualr\\Omnipay\\TillPayments\\" : "src/" }
     },
     "require": {
         "omnipay/common": "~2.0"

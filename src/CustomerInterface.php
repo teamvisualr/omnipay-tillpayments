@@ -3,7 +3,7 @@
  * Customer interface
  */
 
-namespace Omnipay\Till;
+namespace Visualr\Omnipay\TillPayments;
 
 /**
  * Customer interface

@@ -1,9 +1,9 @@
 <?php
 
-namespace Omnipay\Till;
+namespace Visualr\Omnipay\TillPayments;
 
 use Omnipay\Common\Helper;
-use Omnipay\Till\Traits\ParameterBagTrait;
+use Visualr\Omnipay\TillPayments\Traits\ParameterBagTrait;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**

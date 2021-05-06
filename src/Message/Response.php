@@ -3,7 +3,7 @@
  * Till Payments Response
  */
 
-namespace Omnipay\Till\Message;
+namespace Visualr\Omnipay\TillPayments\Message;
 
 /**
  * Till Payments Response

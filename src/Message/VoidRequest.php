@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnipay\Till\Message;
+namespace Visualr\Omnipay\TillPayments\Message;
 
 /**
  * Class VoidRequest
  *
- * @package Omnipay\Till\Message
+ * @package Visualr\Omnipay\TillPayments\Message
  */
 class VoidRequest extends AbstractTransactionRequest
 {

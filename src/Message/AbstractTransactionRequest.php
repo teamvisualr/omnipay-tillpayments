@@ -3,10 +3,10 @@
  * Till Payments Abstract Request
  */
 
-namespace Omnipay\Till\Message;
+namespace Visualr\Omnipay\TillPayments\Message;
 
 use Omnipay\Common\CreditCard;
-use Omnipay\Till\Customer;
+use Visualr\Omnipay\TillPayments\Customer;
 
 /**
  * Till Abstract Transaction Request
