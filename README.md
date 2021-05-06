@@ -15,7 +15,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/till": "~1.0"
+        "visualr/omnipay-tillpayments": "~2.0"
     }
 }
 ```
