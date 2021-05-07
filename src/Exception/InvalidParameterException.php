@@ -1,11 +1,11 @@
 <?php
 
-namespace Visualr\Omnipay\TillPayments;
+namespace Omnipay\TillPayments;
 
 /**
  * Class InvalidParameterException
  *
- * @package Visualr\Omnipay\TillPayments
+ * @package Omnipay\TillPayments
  */
 class InvalidParameterException extends \Exception
 {

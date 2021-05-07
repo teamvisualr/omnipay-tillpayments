@@ -1,6 +1,6 @@
 <?php
 
-namespace Visualr\Omnipay\TillPayments;
+namespace Omnipay\TillPayments;
 
 use Omnipay\Common\Helper;
 use Symfony\Component\HttpFoundation\ParameterBag;

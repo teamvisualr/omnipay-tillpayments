@@ -1,11 +1,11 @@
 <?php
 
-namespace Visualr\Omnipay\TillPayments\Message;
+namespace Omnipay\TillPayments\Message;
 
 /**
  * Class RegisterRequest
  *
- * @package Visualr\Omnipay\TillPayments\Message
+ * @package Omnipay\TillPayments\Message
  */
 class RegisterRequest extends AbstractTransactionRequest
 {

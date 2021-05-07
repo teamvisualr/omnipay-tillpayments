@@ -3,7 +3,7 @@
  * Till Gateway
  */
 
-namespace Visualr\Omnipay\TillPayments;
+namespace Omnipay\TillPayments;
 
 use Omnipay\Common\AbstractGateway;
 
@@ -238,11 +238,11 @@ class Gateway extends AbstractGateway
      * (which is called debit in their API)
      *
      * @param array $parameters
-     * @return \Visualr\Omnipay\TillPayments\Message\PurchaseRequest
+     * @return \Omnipay\TillPayments\Message\PurchaseRequest
      */
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Visualr\Omnipay\TillPayments\Message\PurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\TillPayments\Message\PurchaseRequest', $parameters);
     }
 
     /**
@@ -250,22 +250,22 @@ class Gateway extends AbstractGateway
      * (which is called preauthorize in their API)
      *
      * @param array $parameters
-     * @return \Visualr\Omnipay\TillPayments\Message\AuthorizeRequest
+     * @return \Omnipay\TillPayments\Message\AuthorizeRequest
      */
     public function authorize(array $parameters = array())
     {
-        return $this->createRequest('\Visualr\Omnipay\TillPayments\Message\AuthorizeRequest', $parameters);
+        return $this->createRequest('\Omnipay\TillPayments\Message\AuthorizeRequest', $parameters);
     }
 
     /**
      * Create a capture request
      *
      * @param array $parameters
-     * @return \Visualr\Omnipay\TillPayments\Message\CaptureRequest
+     * @return \Omnipay\TillPayments\Message\CaptureRequest
      */
     public function capture(array $parameters = array())
     {
-        return $this->createRequest('\Visualr\Omnipay\TillPayments\Message\CaptureRequest', $parameters);
+        return $this->createRequest('\Omnipay\TillPayments\Message\CaptureRequest', $parameters);
     }
 
     /**
@@ -273,22 +273,22 @@ class Gateway extends AbstractGateway
      * This voids the authorized payment
      *
      * @param array $parameters
-     * @return \Visualr\Omnipay\TillPayments\Message\VoidRequest
+     * @return \Omnipay\TillPayments\Message\VoidRequest
      */
     public function void(array $parameters = array())
     {
-        return $this->createRequest('\Visualr\Omnipay\TillPayments\Message\VoidRequest', $parameters);
+        return $this->createRequest('\Omnipay\TillPayments\Message\VoidRequest', $parameters);
     }
 
     /**
      * Create a refund request
      *
      * @param array $parameters
-     * @return \Visualr\Omnipay\TillPayments\Message\RefundRequest
+     * @return \Omnipay\TillPayments\Message\RefundRequest
      */
     public function refund(array $parameters = array())
     {
-        return $this->createRequest('\Visualr\Omnipay\TillPayments\Message\RefundRequest', $parameters);
+        return $this->createRequest('\Omnipay\TillPayments\Message\RefundRequest', $parameters);
     }
 
     /**
@@ -297,11 +297,11 @@ class Gateway extends AbstractGateway
      * This registers the payment instrument token
      *
      * @param array $parameters
-     * @return \Visualr\Omnipay\TillPayments\Message\RegisterRequest
+     * @return \Omnipay\TillPayments\Message\RegisterRequest
      */
     public function createCard(array $parameters = array())
     {
-        return $this->createRequest('\Visualr\Omnipay\TillPayments\Message\RegisterRequest', $parameters);
+        return $this->createRequest('\Omnipay\TillPayments\Message\RegisterRequest', $parameters);
     }
 
     /**
@@ -310,21 +310,21 @@ class Gateway extends AbstractGateway
      * This removes the registered payment instrument token
      *
      * @param array $parameters
-     * @return \Visualr\Omnipay\TillPayments\Message\DeregisterRequest
+     * @return \Omnipay\TillPayments\Message\DeregisterRequest
      */
     public function deleteCard(array $parameters = array())
     {
-        return $this->createRequest('\Visualr\Omnipay\TillPayments\Message\DeregisterRequest', $parameters);
+        return $this->createRequest('\Omnipay\TillPayments\Message\DeregisterRequest', $parameters);
     }
 
     /**
      * Create a payout request
      *
      * @param array $parameters
-     * @return \Visualr\Omnipay\TillPayments\Message\PayoutRequest
+     * @return \Omnipay\TillPayments\Message\PayoutRequest
      */
     public function payout(array $parameters = array())
     {
-        return $this->createRequest('\Visualr\Omnipay\TillPayments\Message\PayoutRequest', $parameters);
+        return $this->createRequest('\Omnipay\TillPayments\Message\PayoutRequest', $parameters);
     }
 }

@@ -3,7 +3,7 @@
  * Till Payments Abstract Response
  */
 
-namespace Visualr\Omnipay\TillPayments\Message;
+namespace Omnipay\TillPayments\Message;
 
 use Omnipay\Common\Message\RedirectResponseInterface;
 

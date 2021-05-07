@@ -3,16 +3,16 @@
  * Till Payments Abstract Request
  */
 
-namespace Visualr\Omnipay\TillPayments\Message;
+namespace Omnipay\TillPayments\Message;
 
 use Guzzle\Http\ClientInterface;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Exception\RuntimeException;
 use Omnipay\Common\Helper;
-use Visualr\Omnipay\TillPayments\Customer;
-use Visualr\Omnipay\TillPayments\InvalidParameterException;
-use Visualr\Omnipay\TillPayments\Schedule;
-use Visualr\Omnipay\TillPayments\ThreeDSecureData;
+use Omnipay\TillPayments\Customer;
+use Omnipay\TillPayments\InvalidParameterException;
+use Omnipay\TillPayments\Schedule;
+use Omnipay\TillPayments\ThreeDSecureData;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 

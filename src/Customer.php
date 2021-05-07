@@ -1,10 +1,10 @@
 <?php
 
-namespace Visualr\Omnipay\TillPayments;
+namespace Omnipay\TillPayments;
 
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Helper;
-use Visualr\Omnipay\TillPayments\Traits\ParameterBagTrait;
+use Omnipay\TillPayments\Traits\ParameterBagTrait;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**

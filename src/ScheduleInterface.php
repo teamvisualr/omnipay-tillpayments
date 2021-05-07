@@ -3,7 +3,7 @@
  * Customer interface
  */
 
-namespace Visualr\Omnipay\TillPayments;
+namespace Omnipay\TillPayments;
 
 /**
  * Schedule interface
