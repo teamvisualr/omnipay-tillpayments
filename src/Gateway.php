@@ -6,6 +6,7 @@
 namespace Omnipay\TillPayments;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Common\Helper;
 
 /**
  * Till Payments Gateway
@@ -17,12 +18,16 @@ use Omnipay\Common\AbstractGateway;
  * <code>
  * // Create a gateway for the Till REST Gateway
  * // (routes to GatewayFactory::create)
- * $gateway = Omnipay::create('TillGateway');
+ * $gateway = Omnipay::create('TillPayments');
  *
  * // Initialise the gateway
  * $gateway->initialize(array(
- *     'secretKey' => 'TEST',
- *     'testMode'  => true, // Or false when you are ready for live transactions
+ *     'apiKey' => 'your-api-key',
+ *     'secretKey' => 'your-secret-key',
+ *     'username' => 'your-username',
+ *     'password' => 'your-password',
+ *     'testMode'  => TRUE, // or FALSE when you are ready for live transactions
+ *     'defaultMerchantTransactionIdPrefix'  => 'omnipay-', // prefix of the merchantTransactionId (optional)
  * ));
  *
  * // Create a credit card object
@@ -30,18 +35,15 @@ use Omnipay\Common\AbstractGateway;
  * // See https://pin.net.au/docs/api/test-cards for a list of card
  * // numbers that can be used for testing.
  * $card = new CreditCard(array(
- *             'firstName'    => 'Example',
- *             'lastName'     => 'Customer',
- *             'number'       => '4200000000000000',
- *             'expiryMonth'  => '01',
- *             'expiryYear'   => '2020',
- *             'cvv'          => '123',
- *             'email'        => 'customer@example.com',
- *             'billingAddress1'       => '1 Scrubby Creek Road',
- *             'billingCountry'        => 'AU',
- *             'billingCity'           => 'Scrubby Creek',
- *             'billingPostcode'       => '4999',
- *             'billingState'          => 'QLD',
+ *     'firstName'       => 'Example',
+ *     'lastName'        => 'Customer',
+ *     'company'         => 'Visualr',
+ *     'email'           => 'customer@example.com',
+ *     'billingAddress1' => '1 Scrubby Creek Road',
+ *     'billingCity'     => 'Scrubby Creek',
+ *     'billingState'    => 'QLD',
+ *     'billingPostcode' => '4999',
+ *     'billingCountry'  => 'AU',
  * ));
  *
  * // Do a purchase transaction on the gateway
@@ -49,7 +51,6 @@ use Omnipay\Common\AbstractGateway;
  *     'description'              => 'Your order for widgets',
  *     'amount'                   => '10.00',
  *     'currency'                 => 'AUD',
- *     'clientIp'                 => $_SERVER['REMOTE_ADDR'],
  *     'card'                     => $card,
  * ));
  * $response = $transaction->send();
@@ -64,8 +65,8 @@ use Omnipay\Common\AbstractGateway;
  *
  * The API has two endpoint host names:
  *
- * * api.pin.net.au (live)
- * * test-api.pin.net.au (test)
+ * * https://gateway.tillpayments.com/api/v3/transaction/ (live)
+ * * https://test-gateway.tillpayments.com/api/v3/transaction/ (test)
  *
  * The live host is for processing live transactions, whereas the test
  * host can be used for integration testing and development.
@@ -76,36 +77,27 @@ use Omnipay\Common\AbstractGateway;
  * ### Authentication
  *
  * Calls to the Till Payments API must be authenticated using HTTP
- * basic authentication, with your API key as the username, and
- * a blank string as the password.
+ * basic authentication, with your username and password.
  *
  * #### Keys
  *
  * Your account has two types of keys:
  *
- * * publishable
- * * secret
+ * * apiKey (different for each payment connector)
+ * * secretKey
  *
- * You can find your keys on the account settings page of the dashboard
- * after you have created an account at pin.net.au and logged in.
- *
- * Your secret key can be used with all of the API, and must be kept
- * secure and secret at all times. You use your secret key from your
- * server to create charges and refunds.
- *
- * Your publishable key can be used from insecure locations (such as
- * browsers or mobile apps) to create cards with the cards API. This
- * is the key you use with Till.js to create secure payment forms in
- * the browser.
+ * Your apiKey will be different for each payment connector. You will
+ * need to ask Till Payments for a new API key when you are integrating
+ * a new payment connector.
  *
  * @see \Omnipay\Common\AbstractGateway
- * @link https://pin.net.au/docs/api
+ * @link https://gateway.tillpayments.com/documentation/apiv3
  */
 class Gateway extends AbstractGateway
 {
     public function getName()
     {
-        return 'Till';
+        return 'Till Payments';
     }
 
     public function getDefaultParameters()
