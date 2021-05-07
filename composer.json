@@ -28,7 +28,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Visualr\\Omnipay\\TillPayments\\" : "src/"
+            "Omnipay\\TillPayments\\" : "src/"
         }
     },
     "require": {

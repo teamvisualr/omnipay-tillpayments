@@ -34,7 +34,7 @@ repository.
 
 ```php
 // Create a gateway
-$gateway = Omnipay::create('Till');
+$gateway = Omnipay::create('TillPayments');
 
 // Initialise the gateway
 $gateway->initialize(array(
