@@ -43,18 +43,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $testEndpoint = 'https://test-gateway.tillpayments.com/api/v3/transaction/';
 
     /**
-     * Create a new Request
-     *
-     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
-     * @param HttpRequest     $httpRequest A Symfony HTTP request object
-     */
-    public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest)
-    {
-        parent::__construct($httpClient, $httpRequest);
-
-    }
-
-    /**
      * Initialize the object with parameters.
      *
      * If any unknown parameters passed, they will be ignored.

@@ -27,11 +27,9 @@ abstract class AbstractTransactionRequest extends AbstractRequest
         $jsonBody = json_encode($data);
 
         // This request uses the REST endpoint and requires the JSON content type header
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), $this->buildHeaders($jsonBody), $jsonBody)
-            ->setAuth($this->getUsername(), $this->getPassword())
-            ->send();
+        $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), $this->buildHeaders($jsonBody), $jsonBody);
 
-        return $this->response = new Response($this, $httpResponse->json());
+        return $this->response = new Response($this, json_decode($httpResponse->getBody()->getContents(), true));
     }
 
     /**
@@ -69,6 +67,7 @@ abstract class AbstractTransactionRequest extends AbstractRequest
             'X-Signature' => $signature,
             'Content-Type' => $contentType,
             'Accept' => $contentType,
+            'Authorization' => "Basic " . base64_encode($this->getUsername() . ":" . $this->getPassword()),
         );
 
         return $headers;
