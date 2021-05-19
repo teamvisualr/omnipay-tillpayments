@@ -56,7 +56,7 @@ class Customer implements CustomerInterface
             'shippingFirstName' => 'shippingFirstName',
             'shippingLastName' => 'shippingLastName',
             'shippingCompany' => 'shippingCompany',
-            
+
             'shippingAddress1' => 'shippingAddress1',
             'shippingAddress2' => 'shippingAddress2',
             'shippingCity' => 'shippingCity',
@@ -619,8 +619,10 @@ class Customer implements CustomerInterface
             'shippingFirstName',
             'shippingLastName',
             'shippingCompany',
+
             'shippingAddress1',
             'shippingAddress2',
+            'shippingCity',
             'shippingPostcode',
             'shippingState',
             'shippingCountry',
