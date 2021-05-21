@@ -17,6 +17,22 @@ class Item extends \Omnipay\Common\Item
     /**
      * {@inheritdoc}
      */
+    public function getCurrency()
+    {
+        return $this->getParameter('currency');
+    }
+
+    /**
+     * Set the item currency.
+     */
+    public function setCurrency($value)
+    {
+        return $this->setParameter('currency', $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getIdentification()
     {
         return $this->getParameter('identification');
