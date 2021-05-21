@@ -319,4 +319,26 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\PayoutRequest', $parameters);
     }
+
+    /**
+     * Get transaction status by uuid
+     *
+     * @param array $parameters
+     * @return \Omnipay\TillPayments\Message\TransactionStatusByUuidRequest
+     */
+    public function getTransactionStatusByUuid(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\TillPayments\Message\TransactionStatusByUuidRequest', $parameters);
+    }
+
+    /**
+     * Get transaction status by merchantTransactionId
+     *
+     * @param array $parameters
+     * @return \Omnipay\TillPayments\Message\TransactionStatusByMerchantTransactionIdRequest
+     */
+    public function getTransactionStatusByMerchantTransactionId(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\TillPayments\Message\TransactionStatusByMerchantTransactionIdRequest', $parameters);
+    }
 }

@@ -11,7 +11,7 @@ use Omnipay\TillPayments\Customer;
 /**
  * Till Abstract Status Request
  *
- * This class forms the base class for all requests that involve pulling data from till payments
+ * This class forms the base class for all requests that involve pulling transaction status from till payments
  *
  * @link https://gateway.tillpayments.com/documentation/apiv3
  */
@@ -76,7 +76,7 @@ abstract class AbstractStatusRequest extends AbstractRequest
         // This request uses the REST endpoint and requires the JSON content type header
         $httpResponse = $this->httpClient->request('GET', $this->getEndpoint(), $this->buildHeaders($jsonBody));
 
-        return $this->response = new Response($this, json_decode($httpResponse->getBody()->getContents(), true));
+        return $this->response = new TransactionStatusResponse($this, json_decode($httpResponse->getBody()->getContents(), true));
     }
 
     /**
@@ -92,6 +92,7 @@ abstract class AbstractStatusRequest extends AbstractRequest
         $headers = array(
             'Content-Type' => $contentType,
             'Accept' => $contentType,
+            'Authorization' => "Basic " . base64_encode($this->getUsername() . ":" . $this->getPassword()),
         );
 
         return $headers;
@@ -104,7 +105,7 @@ abstract class AbstractStatusRequest extends AbstractRequest
      */
     public function getEndpoint()
     {
-        return $this->getEndpointBase() . 'status/' . $this->getApiKey();
+        return $this->getEndpointBase() . 'status/' . $this->getApiKey() . '/';
     }
 
 }
