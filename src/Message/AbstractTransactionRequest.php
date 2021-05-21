@@ -465,9 +465,9 @@ abstract class AbstractTransactionRequest extends AbstractRequest
                 $data['name'] = strval($item->getName());
                 $data['description'] = strval($item->getDescription());
                 $data['quantity'] = strval($item->getQuantity());
-                $data['price'] = strval($this->getPrice());
-                $data['currency'] = strval($this->getCurrency());
-                $data['extraData'] = strval($this->getExtraData());
+                $data['price'] = strval($item->getPrice());
+                $data['currency'] = strval($item->getCurrency());
+                $data['extraData'] = strval($item->getExtraData());
                 $itemArray[] = $data;
             }
         }
