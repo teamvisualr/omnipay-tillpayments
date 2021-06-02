@@ -105,6 +105,8 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
                     return $error['errorMessage'];
                 }
             }
+        } else if(isset($this->data['errorMessage'])) {
+            return $this->data['errorMessage'];
         }
 
         return null;
@@ -123,6 +125,8 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
                     return $error['errorCode'];
                 }
             }
+        } else if(isset($this->data['errorCode'])) {
+            return $this->data['errorCode'];
         }
 
         return null;
