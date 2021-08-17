@@ -147,4 +147,38 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getBearer()
+    {
+        return $this->getParameter('bearer');
+    }
+
+    /**
+     * @param $value
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setBearer($value)
+    {
+        return $this->setParameter('bearer', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEntityId()
+    {
+        return $this->getParameter('entityId');
+    }
+
+    /**
+     * @param $value
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setEntityId($value)
+    {
+        return $this->setParameter('entityId', $value);
+    }
+
 }
