@@ -60,7 +60,7 @@ class Response extends AbstractResponse
                     return $item['description'];
                 }
             }
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
 
         }
         return null;

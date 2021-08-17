@@ -39,11 +39,7 @@ class TransactionStatusByUuidRequest extends AbstractStatusRequest
      */
     public function sendData($data)
     {
-        $jsonBody = json_encode($data);
-
-        // This request uses the REST endpoint and requires the JSON content type header
         $httpResponse = $this->httpClient->request('GET', $this->getEndpoint(), $this->buildHeaders());
-//        var_dump(json_decode($httpResponse->getBody()->getContents(), true)); die();
         return $this->response = new TransactionStatusResponse($this, json_decode($httpResponse->getBody()->getContents(), true));
     }
 
