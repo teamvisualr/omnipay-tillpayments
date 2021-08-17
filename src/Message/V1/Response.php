@@ -23,17 +23,7 @@ class Response extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return preg_match('/^(000\.000\.|000\.100\.1|000\.[36])/', $this->getCode()) === 1;
-    }
-
-    /**
-     * Check if the returned response is a pending one
-     *
-     * @return bool
-     */
-    public function isPending()
-    {
-        return preg_match('/^(000\.200)/', $this->getCode()) === 1;
+        return preg_match('/^(000\.000\.|000\.100\.1|000\.[36])/', $this->getCode()) === 1 || preg_match('/^(000\.200)/', $this->getCode()) === 1;
     }
 
     /**
