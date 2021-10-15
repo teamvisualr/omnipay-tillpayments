@@ -49,6 +49,9 @@ class PurchaseRequest extends AbstractTransactionRequest
 
         if($transactionToken = $this->getTransactionToken()) {
             $data['transactionToken'] = $transactionToken;
+        } else {
+            $card = $this->getCard();
+            $card->validate();
         }
 
         if($description = $this->getDescription()) {
