@@ -93,7 +93,7 @@ class Customer implements CustomerInterface
      */
     public function getIdentification()
     {
-        return $this->getParameter('identification');
+        return substr($this->getParameter('identification'), 0, 36);
     }
 
     /**
@@ -109,7 +109,7 @@ class Customer implements CustomerInterface
      */
     public function getFirstName()
     {
-        return $this->getParameter('firstName');
+        return substr($this->getParameter('firstName'), 0, 50);
     }
 
     /**
@@ -125,7 +125,7 @@ class Customer implements CustomerInterface
      */
     public function getLastName()
     {
-        return $this->getParameter('lastName');
+        return substr($this->getParameter('lastName'), 0, 50);
     }
 
     /**
@@ -185,7 +185,7 @@ class Customer implements CustomerInterface
      */
     public function getBillingAddress1()
     {
-        return $this->getParameter('billingAddress1');
+        return substr($this->getParameter('billingAddress1'), 0, 50);
     }
 
     /**
@@ -201,7 +201,7 @@ class Customer implements CustomerInterface
      */
     public function getBillingAddress2()
     {
-        return $this->getParameter('billingAddress2');
+        return substr($this->getParameter('billingAddress2'), 0, 50);
     }
 
     /**
@@ -217,7 +217,7 @@ class Customer implements CustomerInterface
      */
     public function getBillingCity()
     {
-        return $this->getParameter('billingCity');
+        return substr($this->getParameter('billingCity'), 0, 30);
     }
 
     /**
@@ -233,7 +233,7 @@ class Customer implements CustomerInterface
      */
     public function getBillingPostcode()
     {
-        return $this->getParameter('billingPostcode');
+        return substr($this->getParameter('billingPostcode'), 0, 8);
     }
 
     /**
@@ -249,7 +249,7 @@ class Customer implements CustomerInterface
      */
     public function getBillingState()
     {
-        return $this->getParameter('billingState');
+        return substr($this->getParameter('billingPostcode'), 0, 30);
     }
 
     /**
@@ -289,7 +289,7 @@ class Customer implements CustomerInterface
      */
     public function getBillingPhone()
     {
-        return $this->getParameter('billingPhone');
+        return substr($this->getParameter('billingPostcode'), 0, 20);
     }
 
     /**
@@ -305,7 +305,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingFirstName()
     {
-        return $this->getParameter('shippingFirstName');
+        return substr($this->getParameter('shippingFirstName'), 0, 50);
     }
 
     /**
@@ -321,7 +321,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingLastName()
     {
-        return $this->getParameter('shippingLastName');
+        return substr($this->getParameter('shippingLastName'), 0, 50);
     }
 
     /**
@@ -337,7 +337,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingCompany()
     {
-        return $this->getParameter('shippingCompany');
+        return substr($this->getParameter('shippingCompany'), 0, 50);
     }
 
     /**
@@ -353,7 +353,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingAddress1()
     {
-        return $this->getParameter('shippingAddress1');
+        return substr($this->getParameter('shippingAddress1'), 0, 50);
     }
 
     /**
@@ -369,7 +369,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingAddress2()
     {
-        return $this->getParameter('shippingAddress2');
+        return substr($this->getParameter('shippingAddress2'), 0, 50);
     }
 
     /**
@@ -385,7 +385,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingCity()
     {
-        return $this->getParameter('shippingCity');
+        return substr($this->getParameter('shippingAddress2'), 0, 30);
     }
 
     /**
@@ -401,7 +401,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingPostcode()
     {
-        return $this->getParameter('shippingPostcode');
+        return substr($this->getParameter('shippingAddress2'), 0, 8);
     }
 
     /**
@@ -417,7 +417,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingState()
     {
-        return $this->getParameter('shippingState');
+        return substr($this->getParameter('shippingAddress2'), 0, 30);
     }
 
     /**
@@ -433,6 +433,10 @@ class Customer implements CustomerInterface
      */
     public function getShippingCountry()
     {
+//        if(is_string($value) && strlen($value) > 2) {
+//            throw new InvalidParameterException('shippingCountry needs to be 2-letter country code');
+//        }
+
         return $this->getParameter('shippingCountry');
     }
 
@@ -457,7 +461,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingPhone()
     {
-        return $this->getParameter('shippingPhone');
+        return substr($this->getParameter('shippingPhone'), 0, 20);
     }
 
     /**
@@ -473,7 +477,7 @@ class Customer implements CustomerInterface
      */
     public function getCompany()
     {
-        return $this->getParameter('company');
+        return substr($this->getParameter('company'), 0, 50);
     }
 
     /**
