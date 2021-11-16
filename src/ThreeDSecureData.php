@@ -1044,7 +1044,7 @@ class ThreeDSecureData implements ThreeDSecureDataInterface
 
         foreach($optionalAttributes as $attribute) {
             $value = $this->parameters->get($attribute);
-            if (!isset($value)) {
+            if (isset($value)) {
                 $data[$attribute] = $value;
             }
         }
