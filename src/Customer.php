@@ -249,7 +249,7 @@ class Customer implements CustomerInterface
      */
     public function getBillingState()
     {
-        return substr($this->getParameter('billingPostcode'), 0, 30);
+        return substr($this->getParameter('billingState'), 0, 30);
     }
 
     /**
@@ -289,7 +289,7 @@ class Customer implements CustomerInterface
      */
     public function getBillingPhone()
     {
-        return substr($this->getParameter('billingPostcode'), 0, 20);
+        return substr($this->getParameter('billingPhone'), 0, 20);
     }
 
     /**
@@ -385,7 +385,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingCity()
     {
-        return substr($this->getParameter('shippingAddress2'), 0, 30);
+        return substr($this->getParameter('shippingCity'), 0, 30);
     }
 
     /**
@@ -401,7 +401,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingPostcode()
     {
-        return substr($this->getParameter('shippingAddress2'), 0, 8);
+        return substr($this->getParameter('shippingPostcode'), 0, 8);
     }
 
     /**
@@ -417,7 +417,7 @@ class Customer implements CustomerInterface
      */
     public function getShippingState()
     {
-        return substr($this->getParameter('shippingAddress2'), 0, 30);
+        return substr($this->getParameter('shippingState'), 0, 30);
     }
 
     /**
