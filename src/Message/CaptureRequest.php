@@ -29,6 +29,9 @@ class CaptureRequest extends AbstractTransactionRequest
             $data['referenceUuid'] = $referenceUuid;
         }
 
+        if($description = $this->getDescription()) {
+            $data['description'] = $description;
+        }
 
         if($items = $this->getItemData()) {
             $data['items'] = $items;
