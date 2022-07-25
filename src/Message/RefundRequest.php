@@ -26,11 +26,9 @@ class RefundRequest extends AbstractTransactionRequest
         $data['currency'] = $this->getCurrency();
         $data['referenceUuid'] = $this->getReferenceUuid();
 
-
         if($callbackUrl = $this->getCallbackUrl()) {
             $data['callbackUrl'] = $callbackUrl;
         }
-
 
         if($transactionToken = $this->getTransactionToken()) {
             $data['transactionToken'] = $transactionToken;
@@ -40,6 +38,9 @@ class RefundRequest extends AbstractTransactionRequest
             $data['description'] = $description;
         }
 
+        if($customer = $this->getCustomerData()) {
+            $data['customer'] = $customer;
+        }
 
         if($items = $this->getItemData()) {
             $data['items'] = $items;

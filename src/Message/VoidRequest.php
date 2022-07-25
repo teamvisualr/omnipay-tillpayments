@@ -24,6 +24,14 @@ class VoidRequest extends AbstractTransactionRequest
 
         $data['referenceUuid'] = $this->getReferenceUuid();
 
+        if($description = $this->getDescription()) {
+            $data['description'] = $description;
+        }
+
+        if($customer = $this->getCustomerData()) {
+            $data['customer'] = $customer;
+        }
+
         return $data;
     }
 
