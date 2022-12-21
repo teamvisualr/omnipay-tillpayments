@@ -38,6 +38,27 @@ abstract class AbstractTransactionRequest extends AbstractRequest
         if(!$this->getMerchantTransactionId()) {
             $this->setMerchantTransactionId($this->getDefaultMerchantTransactionId());
         }
+
+        if($this->getDefaultProxy() && !$this->getProxy()) {
+            $this->setProxy($this->getDefaultProxy());
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultProxy()
+    {
+        return $this->getParameter('defaultProxy');
+    }
+
+    /**
+     * @param $value
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setDefaultProxy($value)
+    {
+        return $this->setParameter('defaultProxy', $value);
     }
 
     /**
