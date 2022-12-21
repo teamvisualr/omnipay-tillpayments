@@ -43,6 +43,7 @@ $gateway->initialize(array(
     'username' => 'your-username',
     'password' => 'your-password',
     'testMode'  => TRUE, // or FALSE when you are ready for live transactions
+    'defaultProxy' => null, // or instance of \Omnipay\TillPayments\Proxy 
     'defaultMerchantTransactionIdPrefix'  => 'omnipay-', // prefix of the merchantTransactionId (optional)
 ));
 ```
@@ -663,6 +664,35 @@ try {
 
 
 ## Advanced Usage
+
+### Using Proxy
+There maybe scenario where user required the route the outbound traffic through a proxy, the following are example to implemented proxy route for Till Payments.
+```php
+// Create Proxy configuration
+$proxy = new \Omnipay\TillPayments\Proxy([
+    'enabled' => true,
+    'url' => 'my-proxy-url',
+    'port' => '8080',
+    'username' => 'your-proxy-username',
+    'password' => 'your-proxy-password',
+    'certUrl' => 'your-certificate', // If your proxy has a certificate or leave blank
+    'noVerifySSLPeer' => false // or true if your using VerifySSLPeer usually used for live
+]);
+
+// Create gateway
+$gateway = \Omnipay\Omnipay::create('TillPayments');
+// Initialise the gateway
+$gateway->initialize(array(
+    'apiKey' => 'your-api-key',
+    'secretKey' => 'your-secret-key',
+    'username' => 'your-username',
+    'password' => 'your-password',
+    'testMode'  => TRUE, // or FALSE when you are ready for live transactions
+    'defaultProxy' => $proxy, // or instance of \Omnipay\TillPayments\Proxy 
+    'defaultMerchantTransactionIdPrefix'  => 'omnipay-', // prefix of the merchantTransactionId (optional)
+));
+```
+
 
 ### Using Customer instead of CreditCard
 
