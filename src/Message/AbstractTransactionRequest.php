@@ -658,8 +658,8 @@ abstract class AbstractTransactionRequest extends AbstractRequest
             if ($this->getProxy()->getPort()) {
                 $proxyCurl[CURLOPT_PROXYPORT] = $this->getProxy()->getPort();
             }
-            if ($this->getProxy()->getUsername()) {
-                $proxyCurl[CURLOPT_PROXYUSERPWD] = $this->getProxy()->getUsername();
+            if ($this->getProxy()->getUsername() && $this->getProxy()->getPassword()) {
+                $proxyCurl[CURLOPT_PROXYUSERPWD] = sprintf('%s:%s', $this->getProxy()->getUsername(), $this->getProxy()->getPassword());
             }
 
             if ($this->getProxy()->getCertUrl()) {
