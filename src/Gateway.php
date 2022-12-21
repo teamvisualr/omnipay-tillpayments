@@ -5,6 +5,8 @@
 
 namespace Omnipay\TillPayments;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Helper;
 
@@ -340,5 +342,15 @@ class Gateway extends AbstractGateway
     public function getTransactionStatusByMerchantTransactionId(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\TransactionStatusByMerchantTransactionIdRequest', $parameters);
+    }
+
+    /**
+     * Get the global default HTTP client.
+     *
+     * @return ClientInterface
+     */
+    protected function getDefaultHttpClient()
+    {
+        return new Client();
     }
 }
