@@ -96,7 +96,7 @@ class Proxy {
         return $this->setParameter('noVerifySSLPeer', $value);
     }
 
-    public function getNoVerifySSLPeer(): Proxy
+    public function getNoVerifySSLPeer(): bool
     {
         return (bool) $this->getParameter('noVerifySSLPeer');
     }
