@@ -28,5 +28,5 @@ interface PaymentDataInterface
      *
      * @return array
      */
-    public function getData()
+    public function getData(): array;
 }
