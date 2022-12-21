@@ -109,8 +109,8 @@ class Gateway extends AbstractGateway
             'username' => '',
             'password' => '',
             'testMode' => false,
-            'defaultMerchantTransactionIdPrefix' => 'omnipay-',
             'defaultProxy' => null,
+            'defaultMerchantTransactionIdPrefix' => 'omnipay-',
         );
     }
 
