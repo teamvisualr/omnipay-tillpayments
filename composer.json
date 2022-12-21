@@ -32,7 +32,8 @@
         }
     },
     "require": {
-        "omnipay/common": "^3"
+        "omnipay/common": "^3",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
         "omnipay/tests": "^3"

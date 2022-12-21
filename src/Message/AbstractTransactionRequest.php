@@ -8,6 +8,7 @@ namespace Omnipay\TillPayments\Message;
 use Omnipay\Common\CreditCard;
 use Omnipay\TillPayments\Customer;
 use Omnipay\TillPayments\InvalidParameterException;
+use Omnipay\TillPayments\Proxy;
 use Omnipay\TillPayments\Schedule;
 use Omnipay\TillPayments\ThreeDSecureData;
 
@@ -21,6 +22,10 @@ use Omnipay\TillPayments\ThreeDSecureData;
 abstract class AbstractTransactionRequest extends AbstractRequest
 {
 
+    /**
+     * @var null|Proxy
+     */
+    protected $proxy = null;
     /**
      * Set default parameters after initializing
      */
@@ -555,6 +560,16 @@ abstract class AbstractTransactionRequest extends AbstractRequest
         return $this->getCustomer()->setPaymentData($value);
     }
 
+    public function setProxy(Proxy $proxy)
+    {
+        $this->proxy = $proxy;
+    }
+
+    public function getProxy()
+    {
+        return $this->proxy;
+    }
+
     /**
      * Set the payment data of a customer
      *
@@ -575,7 +590,11 @@ abstract class AbstractTransactionRequest extends AbstractRequest
         $jsonBody = json_encode($data);
 
         // This request uses the REST endpoint and requires the JSON content type header
-        $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), $this->buildHeaders($jsonBody), $jsonBody);
+        $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), [
+            'headers' => $this->buildHeaders($jsonBody),
+            'body' => $jsonBody,
+            'curl' => $this->getProxyConfig()
+        ]);
 
         return $this->response = new Response($this, json_decode($httpResponse->getBody()->getContents(), true));
     }
@@ -629,6 +648,30 @@ abstract class AbstractTransactionRequest extends AbstractRequest
     public function getEndpoint()
     {
         return $this->getEndpointBase() . 'transaction/' . $this->getApiKey();
+    }
+
+    protected function getProxyConfig()
+    {
+        $proxyCurl = [];
+        if ($this->getProxy()) {
+            $proxyCurl[CURLOPT_PROXY] = $this->getProxy()->getUrl();
+            if ($this->getProxy()->getPort()) {
+                $proxyCurl[CURLOPT_PROXYPORT] = $this->getProxy()->getPort();
+            }
+            if ($this->getProxy()->getUsername()) {
+                $proxyCurl[CURLOPT_PROXYUSERPWD] = $this->getProxy()->getUsername();
+            }
+
+            if ($this->getProxy()->getCertUrl()) {
+                $proxyCurl[CURLOPT_CAINFO] = $this->getProxy()->getCertUrl();
+            }
+
+            // Allowed for testing only
+            if ($this->getProxy()->getNoVerifySSLPeer()) {
+                $proxyCurl[CURLOPT_SSL_VERIFYPEER] = false;
+            }
+        }
+        return $proxyCurl;
     }
 
 }

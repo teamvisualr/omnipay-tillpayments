@@ -33,6 +33,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     const TRANSACTION_INDICATOR_MOTO = 'MOTO';
 
     /**
+     * The request client.
+     *
+     * @var \GuzzleHttp\ClientInterface
+     */
+    protected $httpClient = null;
+
+    /**
      * @var string
      */
     protected $liveEndpoint = 'https://gateway.tillpayments.com/api/v3/';
@@ -42,6 +49,12 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     protected $testEndpoint = 'https://test-gateway.tillpayments.com/api/v3/';
 
+    public function __construct(\GuzzleHttp\ClientInterface $httpClient, HttpRequest $httpRequest)
+    {
+        $this->httpClient = $httpClient;
+        $this->httpRequest = $httpRequest;
+        $this->initialize();
+    }
     /**
      * Initialize the object with parameters.
      *
