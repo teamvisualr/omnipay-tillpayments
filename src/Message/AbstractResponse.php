@@ -22,6 +22,10 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
      */
     public function isSuccessful()
     {
+        if ($this->isRedirect()) {
+            return false;
+        }
+
         return isset($this->data['success']) && $this->data['success'];
     }
 
