@@ -97,18 +97,19 @@ use Omnipay\Common\Helper;
  */
 class Gateway extends AbstractGateway
 {
-    public function getName()
+    public function getName(): string
     {
         return 'Till Payments';
     }
 
-    public function getDefaultParameters()
+    public function getDefaultParameters(): array
     {
         return array(
             'apiKey' => '',
             'username' => '',
             'password' => '',
             'testMode' => false,
+            'defaultProxy' => null,
             'defaultMerchantTransactionIdPrefix' => 'omnipay-',
         );
     }
@@ -120,7 +121,7 @@ class Gateway extends AbstractGateway
      *
      * @return string
      */
-    public function getApiKey()
+    public function getApiKey(): string
     {
         return $this->getParameter('apiKey');
     }
@@ -133,7 +134,7 @@ class Gateway extends AbstractGateway
      * @param string $value
      * @return Gateway implements a fluent interface
      */
-    public function setApiKey($value)
+    public function setApiKey(string $value): Gateway
     {
         return $this->setParameter('apiKey', $value);
     }
@@ -143,10 +144,9 @@ class Gateway extends AbstractGateway
      *
      * Calls to the Till Payments API must be authenticated using your Secret key
      *
-     * @param string $value
-     * @return Gateway implements a fluent interface
+     * @return string implements a fluent interface
      */
-    public function getSecretKey()
+    public function getSecretKey(): string
     {
         return $this->getParameter('secretKey');
     }
@@ -159,7 +159,7 @@ class Gateway extends AbstractGateway
      * @param string $value
      * @return Gateway implements a fluent interface
      */
-    public function setSecretKey($value)
+    public function setSecretKey(string $value): Gateway
     {
         return $this->setParameter('secretKey', $value);
     }
@@ -176,7 +176,7 @@ class Gateway extends AbstractGateway
      * @param $value
      * @return Gateway
      */
-    public function setUsername($value)
+    public function setUsername($value): Gateway
     {
         return $this->setParameter('username', $value);
     }
@@ -193,7 +193,7 @@ class Gateway extends AbstractGateway
      * @param $value
      * @return Gateway
      */
-    public function setPassword($value)
+    public function setPassword($value): Gateway
     {
         return $this->setParameter('password', $value);
     }
@@ -210,9 +210,23 @@ class Gateway extends AbstractGateway
      * @param $value
      * @return Gateway
      */
-    public function setDefaultMerchantTransactionIdPrefix($value)
+    public function setDefaultMerchantTransactionIdPrefix($value): Gateway
     {
         return $this->setParameter('defaultMerchantTransactionIdPrefix', $value);
+    }
+
+    public function getDefaultProxy()
+    {
+        return $this->getParameter('defaultProxy');
+    }
+
+    /**
+     * @param Proxy $value
+     * @return Gateway
+     */
+    public function setDefaultProxy(Proxy $value): Gateway
+    {
+        return $this->setParameter('defaultProxy', $value);
     }
 
     /**
@@ -220,7 +234,8 @@ class Gateway extends AbstractGateway
      *
      * @return string
      */
-    private function hashPassword($password) {
+    private function hashPassword(string $password): string
+    {
         for ($i = 0; $i < 10; $i++) {
             $password = sha1($password);
         }
@@ -234,7 +249,7 @@ class Gateway extends AbstractGateway
      * @param array $parameters
      * @return \Omnipay\TillPayments\Message\PurchaseRequest
      */
-    public function purchase(array $parameters = array())
+    public function purchase(array $parameters = array()): Message\PurchaseRequest
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\PurchaseRequest', $parameters);
     }
@@ -246,7 +261,7 @@ class Gateway extends AbstractGateway
      * @param array $parameters
      * @return \Omnipay\TillPayments\Message\AuthorizeRequest
      */
-    public function authorize(array $parameters = array())
+    public function authorize(array $parameters = array()): Message\AuthorizeRequest
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\AuthorizeRequest', $parameters);
     }
@@ -257,7 +272,7 @@ class Gateway extends AbstractGateway
      * @param array $parameters
      * @return \Omnipay\TillPayments\Message\CaptureRequest
      */
-    public function capture(array $parameters = array())
+    public function capture(array $parameters = array()): Message\CaptureRequest
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\CaptureRequest', $parameters);
     }
@@ -269,7 +284,7 @@ class Gateway extends AbstractGateway
      * @param array $parameters
      * @return \Omnipay\TillPayments\Message\VoidRequest
      */
-    public function void(array $parameters = array())
+    public function void(array $parameters = array()): Message\VoidRequest
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\VoidRequest', $parameters);
     }
@@ -280,7 +295,7 @@ class Gateway extends AbstractGateway
      * @param array $parameters
      * @return \Omnipay\TillPayments\Message\RefundRequest
      */
-    public function refund(array $parameters = array())
+    public function refund(array $parameters = array()): Message\RefundRequest
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\RefundRequest', $parameters);
     }
@@ -293,7 +308,7 @@ class Gateway extends AbstractGateway
      * @param array $parameters
      * @return \Omnipay\TillPayments\Message\RegisterRequest
      */
-    public function createCard(array $parameters = array())
+    public function createCard(array $parameters = array()): Message\RegisterRequest
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\RegisterRequest', $parameters);
     }
@@ -306,7 +321,7 @@ class Gateway extends AbstractGateway
      * @param array $parameters
      * @return \Omnipay\TillPayments\Message\DeregisterRequest
      */
-    public function deleteCard(array $parameters = array())
+    public function deleteCard(array $parameters = array()): Message\DeregisterRequest
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\DeregisterRequest', $parameters);
     }
@@ -317,7 +332,7 @@ class Gateway extends AbstractGateway
      * @param array $parameters
      * @return \Omnipay\TillPayments\Message\PayoutRequest
      */
-    public function payout(array $parameters = array())
+    public function payout(array $parameters = array()): Message\PayoutRequest
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\PayoutRequest', $parameters);
     }
@@ -328,7 +343,7 @@ class Gateway extends AbstractGateway
      * @param array $parameters
      * @return \Omnipay\TillPayments\Message\TransactionStatusByUuidRequest
      */
-    public function getTransactionStatusByUuid(array $parameters = array())
+    public function getTransactionStatusByUuid(array $parameters = array()): Message\TransactionStatusByUuidRequest
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\TransactionStatusByUuidRequest', $parameters);
     }
@@ -339,7 +354,7 @@ class Gateway extends AbstractGateway
      * @param array $parameters
      * @return \Omnipay\TillPayments\Message\TransactionStatusByMerchantTransactionIdRequest
      */
-    public function getTransactionStatusByMerchantTransactionId(array $parameters = array())
+    public function getTransactionStatusByMerchantTransactionId(array $parameters = array()): Message\TransactionStatusByMerchantTransactionIdRequest
     {
         return $this->createRequest('\Omnipay\TillPayments\Message\TransactionStatusByMerchantTransactionIdRequest', $parameters);
     }
