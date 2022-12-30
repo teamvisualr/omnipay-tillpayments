@@ -23,10 +23,6 @@ abstract class AbstractTransactionRequest extends AbstractRequest
 {
 
     /**
-     * @var null|Proxy
-     */
-    protected $proxy = null;
-    /**
      * Set default parameters after initializing
      */
     protected function setDefaultParameters()
@@ -38,27 +34,6 @@ abstract class AbstractTransactionRequest extends AbstractRequest
         if(!$this->getMerchantTransactionId()) {
             $this->setMerchantTransactionId($this->getDefaultMerchantTransactionId());
         }
-
-        if($this->getDefaultProxy() && !$this->getProxy()) {
-            $this->setProxy($this->getDefaultProxy());
-        }
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDefaultProxy()
-    {
-        return $this->getParameter('defaultProxy');
-    }
-
-    /**
-     * @param $value
-     * @return \Omnipay\Common\Message\AbstractRequest
-     */
-    public function setDefaultProxy($value)
-    {
-        return $this->setParameter('defaultProxy', $value);
     }
 
     /**
@@ -670,29 +645,4 @@ abstract class AbstractTransactionRequest extends AbstractRequest
     {
         return $this->getEndpointBase() . 'transaction/' . $this->getApiKey();
     }
-
-    protected function getProxyConfig()
-    {
-        $proxyCurl = [];
-        if ($this->getProxy()) {
-            $proxyCurl[CURLOPT_PROXY] = $this->getProxy()->getUrl();
-            if ($this->getProxy()->getPort()) {
-                $proxyCurl[CURLOPT_PROXYPORT] = $this->getProxy()->getPort();
-            }
-            if ($this->getProxy()->getUsername() && $this->getProxy()->getPassword()) {
-                $proxyCurl[CURLOPT_PROXYUSERPWD] = sprintf('%s:%s', $this->getProxy()->getUsername(), $this->getProxy()->getPassword());
-            }
-
-            if ($this->getProxy()->getCertUrl()) {
-                $proxyCurl[CURLOPT_CAINFO] = $this->getProxy()->getCertUrl();
-            }
-
-            // Allowed for testing only
-            if ($this->getProxy()->getNoVerifySSLPeer()) {
-                $proxyCurl[CURLOPT_SSL_VERIFYPEER] = false;
-            }
-        }
-        return $proxyCurl;
-    }
-
 }

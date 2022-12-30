@@ -11,6 +11,7 @@ use Omnipay\Common\Exception\RuntimeException;
 use Omnipay\Common\Helper;
 use Omnipay\TillPayments\Customer;
 use Omnipay\TillPayments\InvalidParameterException;
+use Omnipay\TillPayments\Proxy;
 use Omnipay\TillPayments\Schedule;
 use Omnipay\TillPayments\ThreeDSecureData;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -31,6 +32,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     const TRANSACTION_INDICATOR_CARDONFILE = 'CARDONFILE';
     const TRANSACTION_INDICATOR_CARDONFILE_MERCHANT_INITIATED = 'CARDONFILE-MERCHANT-INITIATED';
     const TRANSACTION_INDICATOR_MOTO = 'MOTO';
+
+    /**
+     * @var null|Proxy
+     */
+    protected $proxy = null;
 
     /**
      * The request client.
@@ -79,7 +85,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     protected function setDefaultParameters()
     {
-
+        if($this->getDefaultProxy() && !$this->getProxy()) {
+            $this->setProxy($this->getDefaultProxy());
+        }
     }
 
     /**
@@ -192,6 +200,47 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setEntityId($value)
     {
         return $this->setParameter('entityId', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultProxy()
+    {
+        return $this->getParameter('defaultProxy');
+    }
+
+    /**
+     * @param $value
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setDefaultProxy($value)
+    {
+        return $this->setParameter('defaultProxy', $value);
+    }
+
+    protected function getProxyConfig()
+    {
+        $proxyCurl = [];
+        if ($this->getProxy()) {
+            $proxyCurl[CURLOPT_PROXY] = $this->getProxy()->getUrl();
+            if ($this->getProxy()->getPort()) {
+                $proxyCurl[CURLOPT_PROXYPORT] = $this->getProxy()->getPort();
+            }
+            if ($this->getProxy()->getUsername() && $this->getProxy()->getPassword()) {
+                $proxyCurl[CURLOPT_PROXYUSERPWD] = sprintf('%s:%s', $this->getProxy()->getUsername(), $this->getProxy()->getPassword());
+            }
+
+            if ($this->getProxy()->getCertUrl()) {
+                $proxyCurl[CURLOPT_CAINFO] = $this->getProxy()->getCertUrl();
+            }
+
+            // Allowed for testing only
+            if ($this->getProxy()->getNoVerifySSLPeer()) {
+                $proxyCurl[CURLOPT_SSL_VERIFYPEER] = false;
+            }
+        }
+        return $proxyCurl;
     }
 
 }

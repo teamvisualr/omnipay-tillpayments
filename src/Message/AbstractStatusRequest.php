@@ -74,9 +74,13 @@ abstract class AbstractStatusRequest extends AbstractRequest
         $jsonBody = json_encode($data);
 
         // This request uses the REST endpoint and requires the JSON content type header
-        $httpResponse = $this->httpClient->request('GET', $this->getEndpoint(), $this->buildHeaders($jsonBody));
+        $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), [
+            'headers' => $this->buildHeaders($jsonBody),
+            'body' => $jsonBody,
+            'curl' => $this->getProxyConfig()
+        ]);
 
-        return $this->response = new TransactionStatusResponse($this, json_decode($httpResponse->getBody()->getContents(), true));
+        return $this->response = new Response($this, json_decode($httpResponse->getBody()->getContents(), true));
     }
 
     /**
