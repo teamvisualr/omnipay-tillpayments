@@ -556,16 +556,6 @@ abstract class AbstractTransactionRequest extends AbstractRequest
         return $this->getCustomer()->setPaymentData($value);
     }
 
-    public function setProxy(Proxy $proxy)
-    {
-        $this->proxy = $proxy;
-    }
-
-    public function getProxy()
-    {
-        return $this->proxy;
-    }
-
     /**
      * Set the payment data of a customer
      *
@@ -592,7 +582,7 @@ abstract class AbstractTransactionRequest extends AbstractRequest
             'curl' => $this->getProxyConfig()
         ]);
 
-        return $this->response = new TransactionStatusResponse($this, json_decode($httpResponse->getBody()->getContents(), true));
+        return $this->response = new Response($this, json_decode($httpResponse->getBody()->getContents(), true));
     }
 
     /**

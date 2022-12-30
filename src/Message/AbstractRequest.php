@@ -219,6 +219,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('defaultProxy', $value);
     }
 
+    public function setProxy(Proxy $proxy)
+    {
+        $this->proxy = $proxy;
+    }
+
+    public function getProxy()
+    {
+        return $this->proxy;
+    }
+
     protected function getProxyConfig()
     {
         $proxyCurl = [];
