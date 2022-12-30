@@ -592,7 +592,7 @@ abstract class AbstractTransactionRequest extends AbstractRequest
             'curl' => $this->getProxyConfig()
         ]);
 
-        return $this->response = new Response($this, json_decode($httpResponse->getBody()->getContents(), true));
+        return $this->response = new TransactionStatusResponse($this, json_decode($httpResponse->getBody()->getContents(), true));
     }
 
     /**
