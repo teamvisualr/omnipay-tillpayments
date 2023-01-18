@@ -666,17 +666,17 @@ try {
 ## Advanced Usage
 
 ### Using Proxy
-There maybe scenario where user required the route the outbound traffic through a proxy, the following are example to implemented proxy route for Till Payments.
+There might be times when the user is required to route the outbound traffic through a proxy. Below is an example to implement a proxy route for Till Payments.
 ```php
 // Create Proxy configuration
 $proxy = new \Omnipay\TillPayments\Proxy([
-    'enabled' => true,
+    'enabled' => TRUE,
     'url' => 'my-proxy-url',
     'port' => '8080',
     'username' => 'your-proxy-username',
     'password' => 'your-proxy-password',
-    'certUrl' => 'your-certificate', // If your proxy has a certificate or leave blank
-    'noVerifySSLPeer' => false // or true if your using VerifySSLPeer usually used for live
+    'certUrl' => 'your-certificate', // If your proxy has a certificate, otherwise leave blank
+    'noVerifySSLPeer' => FALSE // or TRUE if you are using VerifySSLPeer, usually used for production
 ]);
 
 // Create gateway
