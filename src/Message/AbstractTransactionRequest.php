@@ -27,6 +27,8 @@ abstract class AbstractTransactionRequest extends AbstractRequest
      */
     protected function setDefaultParameters()
     {
+        parent::setDefaultParameters();
+
         if(!$this->getCustomer()) {
             $this->setCustomer(new Customer());
         }
