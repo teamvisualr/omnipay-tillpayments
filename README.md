@@ -681,6 +681,7 @@ $proxy = new \Omnipay\TillPayments\Proxy([
 
 // Create gateway
 $gateway = \Omnipay\Omnipay::create('TillPayments');
+
 // Initialise the gateway
 $gateway->initialize(array(
     'apiKey' => 'your-api-key',
@@ -693,6 +694,38 @@ $gateway->initialize(array(
 ));
 ```
 
+### Using the PCI Direct API
+Some situations may arise where raw credit card data needs to be sent to Till directly without the use of a hosted payment form or payment.js tokenization. This flag enables the use of this API. The API functions exactly the same as the regular API except it can now take the `cardData` element.
+```php
+// Create credit card object
+$card = new \Omnipay\Common\CreditCard([
+    'firstName' => 'Lionel',
+    'lastName' => 'Messi',
+    'number' => '4111111111111111',
+    'cvv' => '123',
+    'expiryMonth' => '3',
+    'expiryYear' => '2024'
+]);
+
+// Create gateway
+$gateway = \Omnipay\Omnipay::create('TillPayments');
+
+// Initialise the gateway
+$gateway->initialize(array(
+    'apiKey' => 'your-api-key',
+    'secretKey' => 'your-secret-key',
+    'username' => 'your-username',
+    'password' => 'your-password',
+    'testMode'  => TRUE, // or FALSE when you are ready for live transactions
+    'pciDirect' => TRUE, // enables PCI direct API
+    'defaultMerchantTransactionIdPrefix'  => 'omnipay-', // prefix of the merchantTransactionId (optional)
+));
+
+// Register the card with Till
+$gateway->createCard([
+    'card' => $card,
+]);
+```
 
 ### Using Customer instead of CreditCard
 
