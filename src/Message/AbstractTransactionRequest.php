@@ -8,7 +8,6 @@ namespace Omnipay\TillPayments\Message;
 use Omnipay\Common\CreditCard;
 use Omnipay\TillPayments\Customer;
 use Omnipay\TillPayments\InvalidParameterException;
-use Omnipay\TillPayments\Proxy;
 use Omnipay\TillPayments\Schedule;
 use Omnipay\TillPayments\ThreeDSecureData;
 
@@ -433,6 +432,11 @@ abstract class AbstractTransactionRequest extends AbstractRequest
             $data['merchantMetaData'] = $merchantMetaData;
         }
 
+        // Card data can be sent directly when using the PCI direct API
+        if (($cardData = $this->getCardData()) && $this->isPciDirect()) {
+            $data['cardData'] = $cardData;
+        }
+
         return $data;
     }
 
@@ -508,6 +512,28 @@ abstract class AbstractTransactionRequest extends AbstractRequest
         }
 
         return null;
+    }
+
+    /**
+     * Get the card data payload
+     *
+     * @return array
+     */
+    protected function getCardData(): array
+    {
+        $cardData = [];
+
+        if ($card = $this->getCard()) {
+            $cardData = [
+                'cardHolder' => $card->getName(),
+                'pan' => $card->getNumber(),
+                'cvv' => $card->getCvv(),
+                'expirationMonth' => $card->getExpiryMonth(),
+                'expirationYear' => $card->getExpiryYear()
+            ];
+        }
+
+        return $cardData;
     }
 
     /**
@@ -624,6 +650,13 @@ abstract class AbstractTransactionRequest extends AbstractRequest
             'Accept' => $contentType,
             'Authorization' => "Basic " . base64_encode($this->getUsername() . ":" . $this->getPassword()),
         );
+
+        if ($this->isPciDirect()) {
+            $headers['Shared-Secret'] = $this->getSecretKey();
+            if ($this->getTestMode()) {
+                $headers['X-Environment'] = 'Sandbox';
+            }
+        }
 
         return $headers;
     }

@@ -55,6 +55,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     protected $testEndpoint = 'https://test-gateway.tillpayments.com/api/v3/';
 
+    /**
+     * Endpoint for Tills PCI direct API, useful for sending credit card data directly without requiring users to use
+     * payment.js tokenization or a hosted payment page
+     *
+     * https://gateway.tillpayments.com/documentation/json-direct-pci-enabled-api#preamble
+     *
+     * @var string
+     */
+    protected $pciDirectEndpoint = 'https://secure.tillpayments.com/api/v3';
+
     public function __construct(\GuzzleHttp\ClientInterface $httpClient, HttpRequest $httpRequest)
     {
         $this->httpClient = $httpClient;
@@ -165,6 +175,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     public function getEndpointBase()
     {
+        if ($this->isPciDirect()) {
+            return $this->pciDirectEndpoint;
+        }
+
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
@@ -253,4 +267,22 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $proxyCurl;
     }
 
+    /**
+     * If true, use Tills PCI direct API
+     *
+     * @return bool
+     */
+    public function isPciDirect(): bool
+    {
+        return $this->getParameter('pciDirect');
+    }
+
+    /**
+     * @param bool $value
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setPciDirect(bool $value): \Omnipay\Common\Message\AbstractRequest
+    {
+        return $this->setParameter('pciDirect', $value);
+    }
 }
