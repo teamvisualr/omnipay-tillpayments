@@ -111,6 +111,7 @@ class Gateway extends AbstractGateway
             'testMode' => false,
             'defaultProxy' => null,
             'defaultMerchantTransactionIdPrefix' => 'omnipay-',
+            'pciDirect' => false
         );
     }
 
@@ -227,6 +228,23 @@ class Gateway extends AbstractGateway
     public function setDefaultProxy(Proxy $value): Gateway
     {
         return $this->setParameter('defaultProxy', $value);
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPciDirect(): ?bool
+    {
+        return $this->getParameter('pciDirect');
+    }
+
+    /**
+     * @param bool $value
+     * @return Gateway
+     */
+    public function setPciDirect(bool $value): Gateway
+    {
+        return $this->setParameter('pciDirect', $value);
     }
 
     /**
