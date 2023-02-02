@@ -63,7 +63,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      *
      * @var string
      */
-    protected $pciDirectEndpoint = 'https://secure.tillpayments.com/api/v3';
+    protected $pciDirectEndpoint = 'https://secure.tillpayments.com/api/v3/';
 
     public function __construct(\GuzzleHttp\ClientInterface $httpClient, HttpRequest $httpRequest)
     {
