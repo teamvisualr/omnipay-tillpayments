@@ -270,9 +270,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     /**
      * If true, use Tills PCI direct API
      *
-     * @return bool
+     * @return bool|null
      */
-    public function isPciDirect(): bool
+    public function isPciDirect(): ?bool
     {
         return $this->getParameter('pciDirect');
     }
