@@ -378,6 +378,17 @@ class Gateway extends AbstractGateway
     }
 
     /**
+     * Accept an incoming notification
+     *
+     * @param array $parameters
+     * @return mixed
+     */
+    public function acceptNotification(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\TillPayments\Message\NotificationRequest', $parameters);
+    }
+
+    /**
      * Get the global default HTTP client.
      *
      * @return ClientInterface
